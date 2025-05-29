@@ -1,0 +1,40 @@
+[package]
+name = "ssh-conn"
+version = "0.1.0"
+edition = "2024"
+authors = ["SSH连接管理工具"]
+description = "SSH连接管理工具，支持配置管理、密码存储和TUI界面"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/weihongbin1/ssh-conn"
+keywords = ["ssh", "cli", "tui", "config", "management"]
+categories = ["command-line-utilities", "network-programming"]
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "env"] }
+ratatui = "0.30.0-alpha.4"
+crossterm = "0.29"
+rusqlite = { version = "0.36.0", features = ["bundled"] }
+log = "0.4"
+env_logger = "0.11"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+dirs = "6.0.0"
+chrono = { version = "0.4", features = ["serde"] }
+lazy_static = "1.4"
+tokio = { version = "1.0", features = ["net", "time", "rt-multi-thread", "macros"] }
+futures = "0.3"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true

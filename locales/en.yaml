@@ -1,0 +1,222 @@
+# English translation file
+language:
+  code: "en"
+  name: "English"
+
+# UI interface texts
+ui:
+  title: "SSH Connection Manager"
+  server_list: "Server List"
+  search_placeholder: "Search servers..."
+  help_text: "↑↓ select, Enter connect, n new, e edit, d delete, s search, q quit"
+  add_server_title: "Add Server"
+  edit_server_title: "Edit Server"
+  search_title: "Search"
+  delete_confirm_title: "Confirm Delete"
+  delete_warning: "Warning: This action cannot be undone!"
+  delete_prompt: "Type 'yes' to confirm deletion: "
+  search_prompt: "Search Servers (Enter confirm Esc cancel)"
+  search_form_title: "Search Servers (Enter confirm Esc cancel)"
+  search_input_label: "Enter search keywords"
+  search_result: "Search"
+  add_server_form_title: "➕ Add Server (Tab/↑↓ switch, Enter next field, s save, q/Esc cancel)"
+  edit_server_form_title: "✏️  Edit Server (Tab/↑↓ switch, Enter next field, s save, q/Esc cancel)"
+  delete_confirm_message: "Are you sure you want to delete server '{}'?"
+  delete_confirm_warning: "        This action cannot be undone!"
+  delete_confirm_input: "    Type 'yes' to confirm deletion: {}"
+  delete_confirm_esc: "         Press ESC to cancel deletion"
+  optional: "optional"
+  confirm_key: "confirm"
+  cancel_key: "cancel"
+  form_complete_enter: "  Press Enter to move to next field"
+  form_shortcuts: "  Shortcuts: s=save q/Esc=cancel"
+  host_readonly_hint: "Host field is read-only"
+
+# Form fields
+form:
+  host: "Host"
+  hostname: "HostName"
+  user: "User(optional)"
+  port: "Port(optional)"
+  proxy_command: "ProxyCommand(optional)"
+  identity_file: "IdentityFile(optional)"
+  password: "Password(optional)"
+
+# Help texts
+help:
+  add_form: "Tab/↑↓ switch, Enter next field, s save, q cancel"
+  edit_form: "Tab/↑↓ switch, Enter next field, s save, q cancel"
+  search_form: "Enter confirm, Esc cancel"
+  help_navigation: "a:add e:edit d:delete s:search t:test T:test all q:quit"
+
+# Error messages
+error:
+  io_error: "IO Error"
+  database_error: "Database Error"
+  config_parse_error: "Config Parse Error"
+  host_not_found: "Host not found"
+  no_servers_found: "No server configuration found"
+  invalid_port: "Invalid port number"
+  invalid_hostname: "Invalid hostname"
+  invalid_username: "Invalid username"
+  connection_failed: "Connection failed"
+  file_not_found: "File not found"
+  permission_denied: "Permission denied"
+  error_prefix: "Error"
+  error_io: "IO error"
+  error_database: "Database error"
+  error_config_parse: "Configuration file parsing error"
+  error_host_not_found: "Host not found"
+  error_host_exists: "Host already exists"
+  error_invalid_port: "Invalid port number, must be between 1-65535"
+  error_password: "Password operation failed"
+  error_ssh_connection: "SSH connection failed"
+  error_tui: "TUI interface error"
+  error_connection: "Connection test failed"
+  sshpass_not_available: "Unable to start sshpass: {}. Please ensure sshpass is installed (brew install sshpass)"
+  sshpass_not_available_simple: "Unable to start sshpass: {}. Please ensure sshpass is installed"
+  ssh_start_failed: "Unable to start SSH: {}"
+  ssh_keygen_exec_failed: "Unable to execute ssh-keygen: {}"
+  ssh_keygen_failed_continue: "ssh-keygen command failed, but continuing to try connection"
+  ssh_start_with_password_failed: "Unable to start SSH (with password): {}"
+  backup_created_at: "Configuration file backed up to: {}"
+  host_name_empty: "Host name cannot be empty"
+  host_name_no_spaces: "Host name cannot contain spaces or tabs"
+  host_name_wildcard_warning: "Host name contains wildcards, this may affect some functionality"
+  username_empty: "Username cannot be empty"
+  username_no_spaces: "Username cannot contain spaces or tabs"
+  username_invalid_chars: "Username cannot contain @ or : characters"
+  field_required: "Field '{}' is required"
+  path_not_exists: "Path does not exist: {}"
+  tui_mode_host_key_failed: "Handling host key verification failure in TUI mode"
+  log_using_stored_password_reconnect: "Using stored password to reconnect"
+  log_no_stored_password_use_ssh: "No stored password found, using regular SSH connection"
+  non_interactive_mode_host_key_failed: "Handling host key verification failure in non-interactive mode"
+  unknown: "Unknown"
+  host_key_verification_title: "🔑 Host Key Verification"
+  host_key_processing_failed: "Host key processing failed: {}"
+  error_port_range: "❌ Port number must be between 1-65535, please re-enter"
+
+# Success messages
+success:
+  add_server: "Successfully added server"
+  update_server: "Successfully updated server"
+  delete_server: "Successfully deleted server"
+  backup_created: "Backup created successfully"
+  config_saved: "Configuration saved successfully"
+
+# CLI command descriptions
+cli:
+  about: "List and connect to ssh config servers"
+  list: "List all ssh config servers"
+  connect: "Connect to specified server"
+  add: "Add server to ssh config"
+  edit: "Edit server configuration"
+  delete: "Delete server configuration"
+  tui: "Start interactive interface (default)"
+  host_arg: "Host name in ssh config"
+  hostname_arg: "Server address HostName"
+  user_arg: "Username (optional)"
+  port_arg: "Port (optional)"
+  proxy_command_arg: "ProxyCommand (optional)"
+  identity_file_arg: "IdentityFile (optional)"
+  server_list: "Server List"
+
+# Other texts
+press_any_key: "Press any key to continue..."
+error_modal_title: "Error"
+no_ssh_config_found: "No SSH configuration found"
+no_matching_servers: "No server configuration matching '{}' found"
+search_results: "Search results (keyword: '{}'):"
+user_refused_connection: "User refused to connect to server with changed host key"
+no_stored_password: "No stored password found, using plain SSH connection"
+serialization_failed: "Serialization failed"
+deserialization_failed: "Deserialization failed"
+config_format_should_contain: "Configuration format should contain: {}"
+
+# Host key confirmation dialog
+host_key_confirm:
+  warning_title: "⚠️  Host key for server '{}' has changed!"
+  possible_reasons: "This could indicate:"
+  reason_1: "1. The server has been reinstalled or replaced"
+  reason_2: "2. There may be a man-in-the-middle attack"
+  question: "Do you trust the new host key and want to continue connecting?"
+  yes_option: "Yes"
+  no_option: "No"
+  shortcuts: "Shortcuts: y=yes n=no ←→select Enter=confirm Esc=cancel"
+
+# Validation error messages
+validation:
+  hostname_empty: "Hostname cannot be empty"
+  hostname_whitespace: "Hostname cannot contain leading or trailing whitespace"
+  hostname_spaces: "Hostname cannot contain spaces"
+  hostname_consecutive_dots: "Hostname cannot contain consecutive dots"
+  hostname_starts_or_ends_with_dot: "Hostname cannot start or end with a dot"
+
+# Performance test information
+bench:
+  ssh_host_creation_time: "Creating 1000 SSH hosts took: {:?}"
+  search_time: "Executing 7 searches in 1000 hosts took: {:?}"
+  search_performance_too_slow: "Search performance too slow: {:?}"
+  config_generation_time: "Generating 1000 config formats took: {:?}"
+  config_performance_too_slow: "Config generation performance too slow: {:?}"
+  serialization_time: "1000 serialization+deserialization took: {:?}"
+  serialization_performance_too_slow: "Serialization performance too slow: {:?}"
+  creation_performance_too_slow: "Host creation performance too slow: {:?}"
+
+# CLI display labels
+cli_labels:
+  host: "Host"
+  hostname: "HostName"
+  user: "User"
+  port: "Port"
+  proxy_command: "ProxyCommand"
+  identity_file: "IdentityFile"
+
+# Compatibility keys (without prefix)
+server_list: "Server List"
+help_navigation: "a:add e:edit d:delete s:search q:quit"
+field_host: "Host"
+field_hostname: "HostName"
+field_user: "User"
+field_port: "Port"
+field_proxy_command: "ProxyCommand"
+field_identity_file: "IdentityFile"
+field_password: "Password"
+
+# Success messages
+success_add_server: "Successfully added server"
+success_update_server: "Successfully updated server"
+success_delete_server: "Successfully deleted server"
+config_backup_success: "Configuration file backed up to"
+
+# Connection related messages
+connecting_to_host: "🔗 Connecting to host"
+using_stored_password: "🔐 Using stored password for automatic login..."
+using_ssh_key_or_manual: "🔑 Using SSH key or manual password for connection..."
+reconnecting_accept_key: "🔄 Reconnecting and accepting new host key..."
+host_not_exists: "Host does not exist"
+connection_failed_code: "Connection failed"
+ssh_connection_failed_code: "SSH connection failed, exit code"
+log_success_add_host: "Successfully added host"
+log_success_edit_host: "Successfully edited host"
+log_success_delete_host: "Successfully deleted host"
+log_connecting_to_host: "Connecting to host"
+log_tui_connecting_to_host: "TUI mode connecting to host"
+using_stored_password_auto_login: "Found stored password, using sshpass for automatic login"
+no_stored_password_found: "No stored password found, using regular SSH connection"
+using_ssh_key_auth: "Using SSH key authentication or manual password"
+using_stored_password_reconnect: "Using stored password to reconnect"
+no_stored_password_regular_ssh: "No stored password found, using regular SSH connection"
+sshpass_not_available: "Cannot start sshpass"
+ensure_sshpass_installed: "Please ensure sshpass is installed"
+ssh_start_failed: "Cannot start SSH"
+ssh_keygen_exec_failed: "Cannot execute ssh-keygen"
+ssh_keygen_failed_continue: "ssh-keygen command failed, but continuing to try connection"
+
+# Status messages
+status:
+  unknown: "Unknown"
+  connecting: "Connecting..."
+  connected: "Connected"
+  failed: "Failed"

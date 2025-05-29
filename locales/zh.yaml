@@ -1,0 +1,228 @@
+# 中文翻译文件
+language:
+  code: "zh"
+  name: "中文"
+
+# UI界面文本
+ui:
+  title: "SSH连接管理工具"
+  server_list: "服务器列表"
+  search_placeholder: "搜索服务器..."
+  help_text: "↑↓选择, 回车连接, n新建, e编辑, d删除, s搜索, q退出"
+  add_server_title: "添加服务器"
+  edit_server_title: "编辑服务器"
+  search_title: "搜索"
+  delete_confirm_title: "确认删除"
+  delete_warning: "警告：此操作不可撤销！"
+  delete_prompt: "请输入 'yes' 确认删除: "
+  search_prompt: "搜索服务器 (Enter确认 Esc取消)"
+  search_form_title: "搜索服务器 (Enter确认 Esc取消)"
+  search_input_label: "输入搜索关键词"
+  search_result: "搜索"
+  add_server_form_title: "➕ 添加服务器 (Tab/↑↓切换, 回车进入下一项, s保存, q/Esc取消)"
+  edit_server_form_title: "✏️  编辑服务器 (Tab/↑↓切换, 回车进入下一项, s保存, q/Esc取消)"
+  delete_confirm_message: "确定要删除服务器 '{}' 吗？"
+  delete_confirm_warning: "        这个操作不可撤销！"
+  delete_confirm_input: "    请输入 'yes' 确认删除: {}"
+  delete_confirm_esc: "         按 ESC 取消删除"
+  optional: "可选"
+  confirm_key: "确认"
+  cancel_key: "取消"
+  form_complete_enter: "  输入完成后按回车进入下一项"
+  form_shortcuts: "  快捷键: s=保存 q/Esc=取消"
+  host_readonly_hint: "Host字段不可修改"
+
+# 表单字段
+form:
+  host: "Host"
+  hostname: "HostName"
+  user: "User(可选)"
+  port: "Port(可选)"
+  proxy_command: "ProxyCommand(可选)"
+  identity_file: "IdentityFile(可选)"
+  password: "Password(可选)"
+
+# 帮助文本
+help:
+  add_form: "Tab/↑↓切换, 回车进入下一项, s保存, q取消"
+  edit_form: "Tab/↑↓切换, 回车进入下一项, s保存, q取消"
+  search_form: "回车确认, Esc取消"
+  help_navigation: "a:新增 e:编辑 d:删除 s:搜索 t:测试连接 T:测试全部 q:退出"
+
+# 错误信息
+error:
+  io_error: "IO错误"
+  database_error: "数据库错误"
+  config_parse_error: "配置文件解析错误"
+  host_not_found: "主机不存在"
+  no_servers_found: "未找到任何服务器配置"
+  invalid_port: "端口号无效"
+  invalid_hostname: "主机名无效"
+  invalid_username: "用户名无效"
+  connection_failed: "连接失败"
+  file_not_found: "文件未找到"
+  permission_denied: "权限不足"
+  error_prefix: "错误"
+  error_io: "IO错误"
+  error_database: "数据库错误"
+  error_config_parse: "配置文件解析错误"
+  error_host_not_found: "主机不存在"
+  error_host_exists: "主机已存在"
+  error_invalid_port: "端口号无效，必须在1-65535之间"
+  error_password: "密码操作失败"
+  error_ssh_connection: "SSH连接失败"
+  error_tui: "TUI界面错误"
+  error_connection: "连接测试失败"
+  error_port_range: "❌ 端口号必须在1-65535之间，请重新输入"
+  error_port_format: "❌ 端口号格式错误，请输入1-65535之间的整数"
+  error_required_fields: "❌ Host和HostName为必填字段，请完善信息"
+  host_key_verification_failed: "主机密钥验证失败"
+  host_key_changed: "⚠️  主机密钥已更改！\n\n这可能表示：\n1. 服务器已重新安装或更换\n2. 可能存在中间人攻击\n\n是否信任新的主机密钥并继续连接？\n(y/n)"
+  removing_old_key: "正在移除旧的主机密钥..."
+  reconnecting: "正在重新连接..."
+  sshpass_not_available: "无法启动 sshpass: {}. 请确保已安装 sshpass (brew install sshpass)"
+  sshpass_not_available_simple: "无法启动 sshpass: {}. 请确保已安装 sshpass"
+  ssh_start_failed: "无法启动SSH: {}"
+  ssh_keygen_exec_failed: "无法执行ssh-keygen: {}"
+  ssh_keygen_failed_continue: "ssh-keygen 命令执行失败，但继续尝试连接"
+  ssh_start_with_password_failed: "无法启动SSH (使用密码): {}"
+  backup_created_at: "配置文件已备份到: {}"
+  host_name_empty: "Host名称不能为空"
+  host_name_no_spaces: "Host名称不能包含空格或制表符"
+  host_name_wildcard_warning: "Host名称包含通配符，这可能会影响某些功能"
+  username_empty: "用户名不能为空"
+  username_no_spaces: "用户名不能包含空格或制表符"
+  username_invalid_chars: "用户名不能包含@或:字符"
+  field_required: "字段 '{}' 是必填的"
+  path_not_exists: "路径不存在: {}"
+  tui_mode_host_key_failed: "TUI模式下处理主机密钥验证失败"
+
+# 成功信息
+success:
+  add_server: "成功添加服务器"
+  update_server: "成功更新服务器"
+  delete_server: "成功删除服务器"
+  backup_created: "备份创建成功"
+  config_saved: "配置保存成功"
+
+# CLI命令描述
+cli:
+  about: "列出并连接 ssh config 配置的服务器"
+  list: "列出所有 ssh config 配置的服务器"
+  connect: "连接指定服务器"
+  add: "添加服务器到 ssh config"
+  edit: "修改服务器配置"
+  delete: "删除服务器配置"
+  tui: "启动交互式界面（默认）"
+  host_arg: "ssh config 中的 Host 名称"
+  hostname_arg: "服务器地址 HostName"
+  user_arg: "用户名（可选）"
+  port_arg: "端口（可选）"
+  proxy_command_arg: "ProxyCommand（可选）"
+  identity_file_arg: "IdentityFile（可选）"
+  server_list: "服务器列表"
+
+# 其他文本
+press_any_key: "按任意键继续..."
+error_modal_title: "错误"
+no_ssh_config_found: "未找到任何SSH配置"
+no_matching_servers: "未找到匹配 '{}' 的服务器配置"
+search_results: "搜索结果 (关键词: '{}'):"
+user_refused_connection: "用户拒绝连接到已更改主机密钥的服务器"
+no_stored_password: "未找到存储的密码，使用普通 SSH 连接"
+serialization_failed: "序列化失败"
+deserialization_failed: "反序列化失败"
+config_format_should_contain: "配置格式应包含: {}"
+
+# 主机密钥确认对话框
+host_key_confirm:
+  warning_title: "⚠️  服务器 '{}' 的主机密钥已更改！"
+  possible_reasons: "这可能表示："
+  reason_1: "1. 服务器已重新安装或更换"
+  reason_2: "2. 可能存在中间人攻击"
+  question: "是否信任新的主机密钥并继续连接？"
+  yes_option: "是"
+  no_option: "否"
+  shortcuts: "快捷键: y=是 n=否 ←→选择 Enter确认 Esc取消"
+
+# 验证错误信息
+validation:
+  hostname_empty: "主机名不能为空"
+  hostname_whitespace: "主机名不能包含前后空格"
+  hostname_spaces: "主机名不能包含空格"
+  hostname_consecutive_dots: "主机名不能包含连续的点号"
+  hostname_starts_or_ends_with_dot: "主机名不能以点号开始或结束"
+
+# 性能测试信息
+bench:
+  ssh_host_creation_time: "创建1000个SSH主机耗时: {:?}"
+  search_time: "在1000个主机中执行7次搜索耗时: {:?}"
+  search_performance_too_slow: "搜索性能过低: {:?}"
+  config_generation_time: "生成1000次配置格式耗时: {:?}"
+  config_performance_too_slow: "配置生成性能过低: {:?}"
+  serialization_time: "1000次序列化+反序列化耗时: {:?}"
+  serialization_performance_too_slow: "序列化性能过低: {:?}"
+  creation_performance_too_slow: "主机创建性能过低: {:?}"
+
+# CLI显示标签
+cli_labels:
+  host: "Host"
+  hostname: "HostName"
+  user: "User"
+  port: "Port"
+  proxy_command: "ProxyCommand"
+  identity_file: "IdentityFile"
+
+# 兼容性键（不带前缀）
+server_list: "服务器列表"
+help_navigation: "a:新增 e:编辑 d:删除 s:搜索 q:退出"
+field_host: "Host"
+field_hostname: "HostName"
+field_user: "User"
+field_port: "Port"
+field_proxy_command: "ProxyCommand"
+field_identity_file: "IdentityFile"
+field_password: "Password"
+
+# 成功消息
+success_add_server: "成功添加服务器"
+success_update_server: "成功更新服务器"
+success_delete_server: "成功删除服务器"
+config_backup_success: "配置文件已备份到"
+
+# 连接相关消息
+connecting_to_host: "🔗 正在连接到主机"
+using_stored_password: "🔐 使用存储的密码进行自动登录..."
+using_ssh_key_or_manual: "🔑 使用SSH密钥或手动输入密码进行连接..."
+reconnecting_accept_key: "🔄 正在重新连接并接受新的主机密钥..."
+host_not_exists: "主机不存在"
+connection_failed_code: "连接失败"
+ssh_connection_failed_code: "SSH连接失败，退出码"
+log_success_add_host: "成功添加主机"
+log_success_edit_host: "成功编辑主机"
+log_success_delete_host: "成功删除主机"
+log_connecting_to_host: "连接到主机"
+log_tui_connecting_to_host: "TUI模式连接到主机"
+using_stored_password_auto_login: "找到存储的密码，使用 sshpass 进行自动登录"
+no_stored_password_found: "未找到存储的密码，使用普通SSH连接"
+using_ssh_key_auth: "使用SSH密钥认证或手动输入密码"
+using_stored_password_reconnect: "使用存储的密码重新连接"
+no_stored_password_regular_ssh: "未找到存储的密码，使用普通SSH连接"
+sshpass_not_available: "无法启动 sshpass"
+ensure_sshpass_installed: "请确保已安装 sshpass"
+ssh_start_failed: "无法启动SSH"
+ssh_keygen_exec_failed: "无法执行ssh-keygen"
+ssh_keygen_failed_continue: "ssh-keygen 命令执行失败，但继续尝试连接"
+non_interactive_mode_host_key_failed: "非交互模式下处理主机密钥验证失败"
+unknown: "未知"
+host_key_verification_title: "🔑 主机密钥验证"
+host_key_processing_failed: "处理主机密钥失败: {}"
+
+# 状态信息
+status:
+  unknown: "未知"
+  connecting: "连接中..."
+  connected: "已连接"
+  failed: "连接失败"
+
+
