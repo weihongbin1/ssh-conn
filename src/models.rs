@@ -170,7 +170,9 @@ impl SshHost {
     /// 获取实际的主机名和端口
     pub fn get_host_and_port(&self) -> (String, u16) {
         let hostname = self.hostname.as_ref().unwrap_or(&self.host).clone();
-        let port = self.port.as_ref()
+        let port = self
+            .port
+            .as_ref()
             .and_then(|p| p.parse().ok())
             .unwrap_or(22);
         (hostname, port)
@@ -179,7 +181,7 @@ impl SshHost {
     /// 异步测试端口连通性
     pub async fn test_connection(&mut self) -> crate::error::Result<()> {
         use tokio::net::TcpStream;
-        use tokio::time::{timeout, Instant, sleep};
+        use tokio::time::{Instant, sleep, timeout};
 
         // 只有在状态不是Connecting时才设置为Connecting
         // 这样可以避免UI中已经设置的Connecting状态被覆盖
@@ -187,41 +189,40 @@ impl SshHost {
         if !matches!(self.connection_status, ConnectionStatus::Connecting) {
             self.connection_status = ConnectionStatus::Connecting;
         }
-        
+
         let (hostname, port) = self.get_host_and_port();
         let addr = format!("{}:{}", hostname, port);
-        
+
         // 获取连接超时时间，默认5秒
-        let timeout_secs = self.connect_timeout
+        let timeout_secs = self
+            .connect_timeout
             .as_ref()
             .and_then(|t| t.parse().ok())
             .unwrap_or(5);
-        
+
         let start_time = Instant::now();
-        
-        let result = match timeout(
-            Duration::from_secs(timeout_secs),
-            TcpStream::connect(&addr)
-        ).await {
-            Ok(Ok(_stream)) => {
-                let duration = start_time.elapsed();
-                self.connection_status = ConnectionStatus::Connected(duration);
-                log::debug!("Connection to {} successful in {:?}", addr, duration);
-                Ok(())
-            }
-            Ok(Err(e)) => {
-                let error_msg = format!("Connection failed: {}", e);
-                self.connection_status = ConnectionStatus::Failed(error_msg.clone());
-                log::warn!("Connection to {} failed: {}", addr, e);
-                Err(crate::error::SshConnError::Connection(error_msg))
-            }
-            Err(_) => {
-                let error_msg = format!("Connection timeout after {}s", timeout_secs);
-                self.connection_status = ConnectionStatus::Failed(error_msg.clone());
-                log::warn!("Connection to {} timed out", addr);
-                Err(crate::error::SshConnError::Connection(error_msg))
-            }
-        };
+
+        let result =
+            match timeout(Duration::from_secs(timeout_secs), TcpStream::connect(&addr)).await {
+                Ok(Ok(_stream)) => {
+                    let duration = start_time.elapsed();
+                    self.connection_status = ConnectionStatus::Connected(duration);
+                    log::debug!("Connection to {} successful in {:?}", addr, duration);
+                    Ok(())
+                }
+                Ok(Err(e)) => {
+                    let error_msg = format!("Connection failed: {}", e);
+                    self.connection_status = ConnectionStatus::Failed(error_msg.clone());
+                    log::warn!("Connection to {} failed: {}", addr, e);
+                    Err(crate::error::SshConnError::Connection(error_msg))
+                }
+                Err(_) => {
+                    let error_msg = format!("Connection timeout after {}s", timeout_secs);
+                    self.connection_status = ConnectionStatus::Failed(error_msg.clone());
+                    log::warn!("Connection to {} timed out", addr);
+                    Err(crate::error::SshConnError::Connection(error_msg))
+                }
+            };
 
         // 确保Connecting状态至少显示200ms，这样用户能看到🟡状态
         let elapsed = connecting_start.elapsed();

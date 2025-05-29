@@ -467,13 +467,13 @@ impl UiManager {
         let table = Table::new(
             rows,
             &[
-                Constraint::Min(15),   // Host 列 - 最小15字符
-                Constraint::Min(15),   // HostName 列 - 最小15字符
-                Constraint::Length(8), // User 列
-                Constraint::Length(6), // Port 列
+                Constraint::Min(15),    // Host 列 - 最小15字符
+                Constraint::Min(15),    // HostName 列 - 最小15字符
+                Constraint::Length(8),  // User 列
+                Constraint::Length(6),  // Port 列
                 Constraint::Length(12), // Status 列
-                Constraint::Min(20),   // ProxyCommand 列 - 最小20字符
-                Constraint::Min(20),   // IdentityFile 列 - 最小20字符
+                Constraint::Min(20),    // ProxyCommand 列 - 最小20字符
+                Constraint::Min(20),    // IdentityFile 列 - 最小20字符
             ],
         )
         .header(header)
@@ -1075,7 +1075,9 @@ impl UiManager {
 
     /// 处理表单字符输入
     fn handle_form_input(&mut self, c: char) {
-        if self.state.form.focus_index < self.state.form.fields.len() && !(self.state.form.show_edit && self.state.form.focus_index == 0) {
+        if self.state.form.focus_index < self.state.form.fields.len()
+            && !(self.state.form.show_edit && self.state.form.focus_index == 0)
+        {
             self.state.form.fields[self.state.form.focus_index]
                 .value
                 .push(c);
@@ -1084,7 +1086,9 @@ impl UiManager {
 
     /// 处理表单退格键
     fn handle_form_backspace(&mut self) {
-        if self.state.form.focus_index < self.state.form.fields.len() && !(self.state.form.show_edit && self.state.form.focus_index == 0) {
+        if self.state.form.focus_index < self.state.form.fields.len()
+            && !(self.state.form.show_edit && self.state.form.focus_index == 0)
+        {
             self.state.form.fields[self.state.form.focus_index]
                 .value
                 .pop();
@@ -1405,7 +1409,7 @@ impl UiManager {
     fn update_connection_test_results(&mut self, hosts: &mut [SshHost]) {
         if let Ok(mut pending_tests) = self.pending_connection_tests.lock() {
             let mut completed_indices = Vec::new();
-            
+
             for (i, (host_index, status_opt)) in pending_tests.iter().enumerate() {
                 if let Some(status) = status_opt {
                     if *host_index < hosts.len() {
@@ -1414,7 +1418,7 @@ impl UiManager {
                     }
                 }
             }
-            
+
             // 移除已完成的测试（从后往前移除以避免索引问题）
             for &i in completed_indices.iter().rev() {
                 pending_tests.remove(i);
@@ -1585,16 +1589,16 @@ impl UiManager {
 
         // 设置状态为连接中
         hosts[selected].connection_status = ConnectionStatus::Connecting;
-        
+
         // 克隆必要的数据
         let mut host = hosts[selected].clone();
         let pending_tests = self.pending_connection_tests.clone();
-        
+
         // 添加到待处理列表
         if let Ok(mut pending) = pending_tests.lock() {
             pending.push((selected, None));
         }
-        
+
         // 在独立线程中运行连接测试
         thread::spawn(move || {
             // 创建运行时并执行测试
@@ -1640,16 +1644,16 @@ impl UiManager {
         // 设置所有主机状态为连接中
         for (index, host) in hosts.iter_mut().enumerate() {
             host.connection_status = ConnectionStatus::Connecting;
-            
+
             // 克隆必要的数据
             let mut host_clone = host.clone();
             let pending_tests = self.pending_connection_tests.clone();
-            
+
             // 添加到待处理列表
             if let Ok(mut pending) = pending_tests.lock() {
                 pending.push((index, None));
             }
-            
+
             // 在独立线程中运行连接测试
             thread::spawn(move || {
                 // 创建运行时并执行测试

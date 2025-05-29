@@ -14,23 +14,25 @@ use crate::utils::*;
 
 /// 通用SSH连接参数
 const DEFAULT_SSH_OPTIONS: &[&str] = &[
-    "-o", "StrictHostKeyChecking=accept-new",
-    "-o", "LogLevel=ERROR",
+    "-o",
+    "StrictHostKeyChecking=accept-new",
+    "-o",
+    "LogLevel=ERROR",
 ];
 
 /// TUI模式的SSH连接参数
 const TUI_SSH_OPTIONS: &[&str] = &[
-    "-o", "StrictHostKeyChecking=accept-new",
-    "-o", "LogLevel=ERROR",
-    "-o", "RequestTTY=force",
+    "-o",
+    "StrictHostKeyChecking=accept-new",
+    "-o",
+    "LogLevel=ERROR",
+    "-o",
+    "RequestTTY=force",
     "-tt",
 ];
 
 /// 连接测试的SSH参数
-const TEST_SSH_OPTIONS: &[&str] = &[
-    "-o", "ConnectTimeout=10",
-    "-o", "StrictHostKeyChecking=yes",
-];
+const TEST_SSH_OPTIONS: &[&str] = &["-o", "ConnectTimeout=10", "-o", "StrictHostKeyChecking=yes"];
 
 /// 写入SSH配置选项的辅助函数
 fn write_ssh_option<W: Write>(
@@ -61,27 +63,27 @@ pub struct ConfigManager {
 #[cfg(unix)]
 fn exec_command(mut cmd: std::process::Command) -> Result<()> {
     let result = cmd.exec();
-    Err(SshConnError::SshConnectionError(
-        format!("Command exec failed: {:?}", result)
-    ))
+    Err(SshConnError::SshConnectionError(format!(
+        "Command exec failed: {:?}",
+        result
+    )))
 }
 
 #[cfg(windows)]
 fn exec_command(mut cmd: std::process::Command) -> Result<()> {
     let status = cmd.status().map_err(|e| {
-        SshConnError::SshConnectionError(
-            format!("Command execution failed: {}", e)
-        )
+        SshConnError::SshConnectionError(format!("Command execution failed: {}", e))
     })?;
-    
+
     if status.success() {
         // 在Windows上，我们不能真正替换进程，所以这里成功退出
         std::process::exit(0);
     } else {
         let code = status.code().unwrap_or(-1);
-        Err(SshConnError::SshConnectionError(
-            format!("Command failed with code: {}", code)
-        ))
+        Err(SshConnError::SshConnectionError(format!(
+            "Command failed with code: {}",
+            code
+        )))
     }
 }
 
@@ -326,14 +328,18 @@ impl ConfigManager {
             &mut file,
             "ProxyCommand",
             proxy_command,
-            original_host.as_ref().and_then(|o| o.proxy_command.as_deref()),
+            original_host
+                .as_ref()
+                .and_then(|o| o.proxy_command.as_deref()),
         )?;
 
         write_ssh_option(
             &mut file,
             "IdentityFile",
             identity_file,
-            original_host.as_ref().and_then(|o| o.identity_file.as_deref()),
+            original_host
+                .as_ref()
+                .and_then(|o| o.identity_file.as_deref()),
         )?;
 
         // 如果提供了密码，保存到密码管理器
@@ -449,7 +455,7 @@ impl ConfigManager {
 
                 let mut cmd = std::process::Command::new("sshpass");
                 cmd.arg("-p").arg(&password).arg("ssh");
-                
+
                 for option in additional_options {
                     cmd.arg(option);
                 }
@@ -638,12 +644,12 @@ impl ConfigManager {
                 // CLI模式使用 exec，替换当前进程，保存主机密钥到known_hosts
                 let mut cmd = std::process::Command::new("sshpass");
                 cmd.arg("-p")
-                   .arg(&password)
-                   .arg("ssh")
-                   .args(DEFAULT_SSH_OPTIONS)
-                   .arg(host);
-                
-                return exec_command(cmd);
+                    .arg(&password)
+                    .arg("ssh")
+                    .args(DEFAULT_SSH_OPTIONS)
+                    .arg(host);
+
+                exec_command(cmd)
             }
             None => {
                 log::info!("{}", t("log_no_stored_password_use_ssh"));
@@ -651,10 +657,9 @@ impl ConfigManager {
 
                 // CLI模式使用 exec，替换当前进程
                 let mut cmd = std::process::Command::new("ssh");
-                cmd.args(DEFAULT_SSH_OPTIONS)
-                   .arg(host);
-                
-                return exec_command(cmd);
+                cmd.args(DEFAULT_SSH_OPTIONS).arg(host);
+
+                exec_command(cmd)
             }
         }
     }

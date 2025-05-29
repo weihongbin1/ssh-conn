@@ -10,8 +10,6 @@ pub mod password;
 pub mod ui;
 pub mod utils;
 
-
-
 // 重新导出常用类型
 pub use error::{Result, SshConnError};
 pub use models::SshHost;
@@ -170,13 +168,14 @@ mod tests {
         host.port = Some("22".to_string());
 
         // 测试序列化
-        let json = serde_json::to_string(&host).unwrap_or_else(|_| panic!("{}", t("serialization_failed")));
+        let json = serde_json::to_string(&host)
+            .unwrap_or_else(|_| panic!("{}", t("serialization_failed")));
         assert!(json.contains("test-server"));
         assert!(json.contains("192.168.1.100"));
 
         // 测试反序列化
-        let deserialized: SshHost =
-            serde_json::from_str(&json).unwrap_or_else(|_| panic!("{}", t("deserialization_failed")));
+        let deserialized: SshHost = serde_json::from_str(&json)
+            .unwrap_or_else(|_| panic!("{}", t("deserialization_failed")));
         assert_eq!(host, deserialized);
     }
 

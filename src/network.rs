@@ -4,7 +4,7 @@ use crate::error::{Result, SshConnError};
 use crate::models::SshHost;
 use std::time::Duration;
 use tokio::net::TcpStream;
-use tokio::time::{timeout, Instant};
+use tokio::time::{Instant, timeout};
 
 /// 网络检测器
 pub struct NetworkProbe {
@@ -15,9 +15,7 @@ pub struct NetworkProbe {
 impl NetworkProbe {
     /// 创建一个新的网络检测器
     pub fn new() -> Self {
-        Self {
-            default_timeout: 5,
-        }
+        Self { default_timeout: 5 }
     }
 
     /// 设置默认超时时间
@@ -35,17 +33,20 @@ impl NetworkProbe {
     pub async fn test_hosts(&self, hosts: &mut [SshHost]) -> Vec<Result<()>> {
         use futures::future::join_all;
 
-        let tasks = hosts.iter_mut().map(|host| {
-            Box::pin(async {
-                host.test_connection().await
-            })
-        });
+        let tasks = hosts
+            .iter_mut()
+            .map(|host| Box::pin(async { host.test_connection().await }));
 
         join_all(tasks).await
     }
 
     /// 测试指定主机名和端口的连接
-    pub async fn test_connection(&self, hostname: &str, port: u16, timeout_secs: Option<u64>) -> Result<Duration> {
+    pub async fn test_connection(
+        &self,
+        hostname: &str,
+        port: u16,
+        timeout_secs: Option<u64>,
+    ) -> Result<Duration> {
         let timeout_duration = Duration::from_secs(timeout_secs.unwrap_or(self.default_timeout));
         let addr = format!("{}:{}", hostname, port);
         let start_time = Instant::now();
@@ -71,7 +72,12 @@ impl NetworkProbe {
     }
 
     /// 连续ping测试，返回平均延迟
-    pub async fn ping_test(&self, hostname: &str, port: u16, count: u32) -> Result<(Duration, Vec<Duration>)> {
+    pub async fn ping_test(
+        &self,
+        hostname: &str,
+        port: u16,
+        count: u32,
+    ) -> Result<(Duration, Vec<Duration>)> {
         let mut results = Vec::new();
         let mut successful_count = 0;
         let mut total_duration = Duration::ZERO;
@@ -82,14 +88,28 @@ impl NetworkProbe {
                     results.push(duration);
                     total_duration += duration;
                     successful_count += 1;
-                    log::debug!("Ping {}/{} to {}:{} - {}ms", i + 1, count, hostname, port, duration.as_millis());
+                    log::debug!(
+                        "Ping {}/{} to {}:{} - {}ms",
+                        i + 1,
+                        count,
+                        hostname,
+                        port,
+                        duration.as_millis()
+                    );
                 }
                 Err(e) => {
-                    log::warn!("Ping {}/{} to {}:{} failed: {}", i + 1, count, hostname, port, e);
+                    log::warn!(
+                        "Ping {}/{} to {}:{} failed: {}",
+                        i + 1,
+                        count,
+                        hostname,
+                        port,
+                        e
+                    );
                     results.push(Duration::from_millis(u64::MAX)); // 表示失败
                 }
             }
-            
+
             // 避免过于频繁的请求
             if i < count - 1 {
                 tokio::time::sleep(Duration::from_millis(100)).await;
@@ -98,7 +118,7 @@ impl NetworkProbe {
 
         if successful_count == 0 {
             return Err(SshConnError::Connection(format!(
-                "All {} ping attempts to {}:{} failed", 
+                "All {} ping attempts to {}:{} failed",
                 count, hostname, port
             )));
         }
@@ -131,7 +151,7 @@ mod tests {
     #[tokio::test]
     async fn test_localhost_connection() {
         let probe = NetworkProbe::new();
-        
+
         // 测试本地SSH端口（如果存在）
         match probe.test_connection("127.0.0.1", 22, Some(1)).await {
             Ok(duration) => {
@@ -146,7 +166,7 @@ mod tests {
     #[tokio::test]
     async fn test_invalid_connection() {
         let probe = NetworkProbe::new();
-        
+
         // 测试无效端口
         let result = probe.test_connection("127.0.0.1", 65534, Some(1)).await;
         assert!(result.is_err());
@@ -161,7 +181,7 @@ mod tests {
 
         let probe = NetworkProbe::new();
         let _ = probe.test_host(&mut host).await;
-        
+
         // 检查状态是否已更新
         assert!(!matches!(host.connection_status, ConnectionStatus::Unknown));
     }
